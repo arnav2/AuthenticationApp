@@ -3,7 +3,7 @@ import {Provider} from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import App from './src';
 import {theme} from './src/core/theme';
-import { Amplify } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import {withAuthenticator} from 'aws-amplify-react-native';
 import config from './src/aws-exports';
 
@@ -17,4 +17,4 @@ const Main = () => (
   </SafeAreaProvider>
 );
 
-export default Main;
+export default withAuthenticator(Main);

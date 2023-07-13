@@ -47,7 +47,7 @@ const LoginScreen = ({ navigation }: Props) => {
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
-        autoCompleteType="email"
+        autoComplete="email"
         textContentType="emailAddress"
         keyboardType="email-address"
       />
