@@ -4,14 +4,14 @@ import { emailValidator } from '../core/utils';
 import Background from '../components/Background';
 import BackButton from '../components/BackButton';
 import Logo from '../components/Logo';
-import Header from '../components/Header';
-import TextInput from '../components/TextInput';
+import Header from '../utils/Header';
+import TextInput from '../utils/TextInput';
 import { theme } from '../core/theme';
-import Button from '../components/Button';
-import { Navigation } from '../types';
+import Button from '../utils/Button';
+import { TNavigation } from '../types';
 
 type Props = {
-  navigation: Navigation;
+  navigation: TNavigation;
 };
 
 const ForgotPasswordScreen = ({ navigation }: Props) => {

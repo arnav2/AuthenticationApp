@@ -1,34 +1,68 @@
 import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, Alert} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
+import Header from '../utils/Header';
+import Button from '../utils/Button';
+import TextInput from '../utils/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
-import { Navigation } from '../types';
+import { TNavigation } from '../types';
+import { Auth } from 'aws-amplify';
 
 type Props = {
-  navigation: Navigation;
+  navigation: TNavigation;
 };
+
+const styles = StyleSheet.create({
+  forgotPassword: {
+    width: '100%',
+    alignItems: 'flex-end',
+    marginBottom: 24,
+  },
+  row: {
+    flexDirection: 'row',
+    marginTop: 4,
+  },
+  label: {
+    color: theme.colors.secondary,
+  },
+  link: {
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+  },
+});
+
 
 const LoginScreen = ({ navigation }: Props) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
+  const [loading, setLoading] = useState(false)
 
-  const _onLoginPressed = () => {
+  const _onLoginPressed = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
+      setLoading(false)
       return;
     }
 
-    navigation.navigate('Dashboard');
+    try {
+      await Auth.signIn(email.value, password.value);
+    } catch(e) {
+      Alert.alert('Oops', e.message)
+    }
+    setLoading(false)
+    
+
   };
 
   return (
@@ -83,24 +117,5 @@ const LoginScreen = ({ navigation }: Props) => {
     </Background>
   );
 };
-
-const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  label: {
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
-});
 
 export default memo(LoginScreen);

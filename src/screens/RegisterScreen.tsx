@@ -1,29 +1,65 @@
 import React, { memo, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
+import Header from '../utils/Header';
+import Button from '../utils/Button';
+import TextInput from '../utils/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { Navigation } from '../types';
+import { TNavigation } from '../types';
+import { Auth } from 'aws-amplify';
 import {
   emailValidator,
   passwordValidator,
   nameValidator,
 } from '../core/utils';
 
-type Props = {
-  navigation: Navigation;
+enum UserGender {
+  Male,
+  Female
+}
+
+type SignUpParameters = {
+  username: string | undefined; // email is the username for our purposes.
+  password: string | undefined;
+  name: string | undefined;
 };
 
-const RegisterScreen = ({ navigation }: Props) => {
-  const [name, setName] = useState({ value: '', error: '' });
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+interface IState {
+  value: string | undefined,
+  error: string | null
+}
 
-  const _onSignUpPressed = () => {
+type Props = {
+  navigation: TNavigation;
+};
+
+export async function signUp({ username, password, name }: SignUpParameters, onSuccessNavigationAction: () => void) {
+  try {
+    const { user } = await Auth.signUp({
+      username,
+      password,
+      attributes: {
+        name
+      },
+      autoSignIn: {
+        enabled: true,
+      },
+    });
+    console.log(user);
+    onSuccessNavigationAction()
+  } catch (e) {
+    Alert.alert('Error signing up:', e.message);
+  }
+}
+
+const RegisterScreen = ({ navigation }: Props) => {
+  const [name, setName] = useState<IState>({ value: undefined, error: null });
+  const [email, setEmail] = useState<IState>({ value: undefined, error: null });
+  const [password, setPassword] = useState<IState>({ value: undefined, error: null });
+
+  const _onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -35,7 +71,10 @@ const RegisterScreen = ({ navigation }: Props) => {
       return;
     }
 
-    navigation.navigate('Dashboard');
+    const signUpParameters = {username: email.value, password: password.value, name: name.value}
+
+    signUp(signUpParameters, () => navigation.navigate('Home'))
+    
   };
 
   return (
@@ -111,7 +150,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    marginTop: 4,
+    marginTop: 2,
   },
   link: {
     fontWeight: 'bold',

@@ -1,0 +1,79 @@
+export enum UserGender {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE'
+}
+
+export enum Units {
+    METRICS = 'METRICS',
+    IMPERIAL = 'IMPERIAL'
+}
+
+export enum ExerciseLevel {
+    BEGINNER = 'BEGINNER',
+    INTERMEDIATE = 'INTERMEDIATE',
+    ADVANCED = 'ADVANCED'
+}
+
+export enum ScreenNames {
+    HOME = 'HOME',
+    BEGIN_EXERCISE = 'BEGIN_EXERCISE',
+    EXERCISE = 'EXERCISE',
+    EXERCISE_COMPLETED = 'EXERCISE_COMPLETED',
+    LIST_EXERCISE = 'LIST_EXERCISE',
+    WORKOUT = 'WORKOUT',
+    WORKOUTPLAYLIST = 'WORKOUTPLAYLIST',
+    SETTINGS = 'SETTINGS',
+    HOMESTACK = 'HOMESTACK',
+    SPLASH_SCREEN = 'SPLASH_SCREEN',
+    USER_CONTAINER = 'USER_CONTAINER',
+    ANALYSIS = 'ANALYSIS',
+};
+
+export enum Equipment {
+    ALL = 'ALL',
+    DUMBBELLS = 'DUMBBELLS',
+    KETTLE_BELLS = 'KETTLE BELLS',
+    PULL_UP_BAR = 'PULL UP BAR',
+    RESISTANCE_BANDS = 'RESISTANCE BANDS',
+    NONE = 'NONE',
+}
+
+export enum MuscleGroups {
+    CHEST = 'CHEST',
+    BICEPS = 'BICEPS',
+    TRICEPS = 'TRICEPS',
+    BACK = 'BACK',
+    LEGS = 'LEGS',
+    HAMSTRINGS = 'HAMSTRINGS',
+    CORE = 'CORE',
+    SHOULDERS = 'SHOULDERS',
+    CALVES = 'CALVES',
+}
+
+export enum ExerciseTypes {
+    CARDIO = 'CARDIO',
+    STRENGTH = 'STRENGTH',
+    FLEXIBILITY = 'FLEXIBILITY',
+    BALANCE = 'BALANCE'
+}
+
+export enum ExerciseTechniques {
+    YOGA = 'YOGA',
+    PILATES = 'PILATES',
+    HIIT = 'HIIT',
+    TABATA = 'TABATA',
+    CIRCUIT = 'CIRCUIT',
+    BODYWEIGHT = 'BODYWEIGHT',
+    STRENGTH = 'STRENGTH',
+    CARDIO = 'CARDIO',
+    FUNCTIONAL = 'FUNCTIONAL',
+    STRETCHING = 'STRETCHING'
+}
+
+export enum ExercisePurposes {
+    WEIGHT_LOSS = 'WEIGHT_LOSS',
+    MUSCLE_BUILDING = 'MUSCLE_BUILDING',
+    TONING = 'TONING',
+    ENDURANCE = 'ENDURANCE',
+    REHABILITATION = 'REHABILITATION'
+}
